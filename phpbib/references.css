@@ -1,0 +1,29 @@
+#bibView{display:block;list-style-type:disc;font-size:1em;margin:1em 0;padding-left: 1.5em;width:98%; }
+#bibView dt{font-weight:normal;background:inherit;color:#102;margin:.75em 4px .15em 0px;text-indent:-1em;padding:2px;text-align:justify;}
+#bibView dd{margin-left:1.5em;}
+#bibView li{display: block; padding:8px 0px 0px 12px;}
+.bibkey{font-weight:bold;text-decoration:none;}
+.bibkey:before{content:"[";}
+.bibkey:after{content:"]";}
+.bibAuthor {color:#112244;}
+.bibAuthor a{font-size:100%!important;}
+.bibTitle {font-weight : bold;color:#141;}
+.bibDate {color:#211;}
+.bibBooktitle,.bibJournal,.bibPublisher,.bibSchool {font-style:italic;}
+.bibConference{font-style:oblique; }
+p.bibAbstract,p.bibKeywords{font-size:.95em;font-family:Times,"Times new roman",serif; }
+p.bibAbstract{text-align:justify;width:90%;}
+
+/*h2{ clear:both;display:block; }*/
+
+.bibEntry{  }
+.bibTeX{font-family:"Courier New",courier,monspace;font-size:9pt;background:#ededed;padding:4pt;  }
+/* index view*/
+#bibIndex_menu{display:block;text-align:center;font-size:1.15em; }
+#bibIndex_menu li{float:left;padding:6px 10px 10px 6px;margin:2px 12px 8px 1px;color:red;}
+#bibIndex_menu a{text-decoration:none;color:#6444FB!important;}
+#bibIndex_menu a:hover, #bibIndex_menu a:focus,#bibIndex_menu a:active{color:#FF9933!important;text-decoration:underline;}
+#BIBcategoriesList,#BIByearsList,#BIBkeywordsList,#BIBauthorsList{display:block;list-style-type:none;text-align:center;}
+#BIBcategoriesList li,#BIByearsList li,#BIBkeywordsList li,#BIBauthorsList li{float:left;padding:2px 4px; }
+#BIBcategoriesList li:after,#BIByearsList li:after,#BIBkeywordsList li:after,#BIBauthorsList li:after{content:" ; "; }
+#BIBcategoriesList li:hover,#BIByearsList li:hover,#BIBkeywordsList li:hover,#BIBauthorsList li:hover{background:#ecdcdf; }

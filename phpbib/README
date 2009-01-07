@@ -1,0 +1,111 @@
+				     phpBIB
+				  Version 1.0b (beta release)
+
+		      Create by David FOLIO, May 2005
+				 [Modified by]
+
+
+See the license term in 'LICENSE' 
+
+
+--------------------------------------------------------------------------------
+ Feature Notes
+--------------------------------------------------------------------------------
+phpBIB is a BibTeX parser  writen in PHP4 <http://www.php.net>. 
+This version 1.0b, still in development phase.
+
+More details was available at http://dfolio.free.fr.
+
+ 
+--------------------------------------------------------------------------------
+ Installation Notes
+--------------------------------------------------------------------------------
+
+Requirement
+~~~~~~~~~~~
+No specific operating system are needed.
+
+phpBIB v1.0a is written  in PHP4. Thus, PHP >=  4.3  is required on  your server
+(may be old   version are supported,  but  not currently tested), and   no other
+modules/extensions/library or software are  needed. PHP is free and downloadable
+from http://www.php.net/downloads.php. Then,  using  a  normal browser you   can
+render your bibliography. 
+
+If you want    to customize this package  to   your own purpose  a   minimal PHP
+knowledge are needed, and of course some BibTeX syntax too.  
+
+
+Downloads
+~~~~~~~~~
+This is the first release of phpBIB, which was available at http://dfolio.free.fr
+
+
+Intall
+~~~~~~
+I assume you get  the package and it  is named phpbib-XX.[zip|tar.gz]  where  XX
+denotes a version number.  Thus running the following command  where you want to
+install this package: 
+
+% unzip -d phpbib-XX.zip
+or
+% tar -xvzf phpbib-XX.tar.gz
+
+should create a directory named phpbib-XX containing the following files:
+    * lang/: contains suported language
+    * bibtexParser.php: provide the BibTexParser class
+    * constants.php: define constant (should customize)
+    * references.bib:a sample BibTeX file
+    * references.css: the cascading style sheet
+    * references.php: a sample file to include into your web page.
+    * README
+    * LICENSE
+
+Then use references.php to include bibliogrpahy on your web page
+
+--------------------------------------------------------------------------------
+ Security
+--------------------------------------------------------------------------------
+ In order to improve the security  you must specify a secure '.htaccess' in each
+directory where you don't want to be accessible by 'visitor', which may contains
+somethings like: 
+   Order allow,deny
+   Allow from all
+
+--------------------------------------------------------------------------------
+General Notes
+--------------------------------------------------------------------------------
+ Many writer may  use  of BibTeX for   maintaining a comprehensive  bibliography
+which they can then draw on at will when writing  papers. There are some usefull
+tools to produce some HTML/XML documents from a BibTeX file, such as:
+    * bibtex2html written in Objective Caml, by Jean-Christophe Filliâtre and
+      Claude Marché.
+    * bibtex2html written in C, by Grégoire Malandain.
+    * bibtex2html (based on bibtexml), by Sara E. Sprenkle.
+    * ... and so on ...
+
+However,  this kind of approach is  limited insofar as  you need to rebuild your
+documents each time you have new bibliography entries. 
+
+The purpose of phpBIB is to include easily bibliography into  your web page from
+BibTeX bibliography file, and to provide access to the BibTeX entries by several
+criteria: year  of publication, category of  publication, keywords, author name,
+from an index page. 
+
+Moreover, with  cache control (not yet included  in this package) you can manage
+your generated document. 
+
+In addition you can easily customize the  output defining some start/end tag and
+using cascading style sheet (CSS). 
+
+
+You can find several information about phpBIB at http://dfolio.free.fr
+
+
+
+--------------------------------------------------------------------------------
+ToDo
+--------------------------------------------------------------------------------
+First, do more test...
+Add some documentation, in particular about 'BibTeX'&phpBIB
+Add more language support (germain, spanish... need translator)
+Add support for "simple" TeX math formulas
