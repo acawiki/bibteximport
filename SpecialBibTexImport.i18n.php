@@ -15,6 +15,9 @@ $messages['en'] = array(
     'bibteximport-form-message'            => 'Please select a BibTex file to convert to article(s), confirmation will be asked.',
     'bibteximport-select-data'             => 'Select the articles you want to import:',
     'bibteximport-log-summary-extracter'   => 'Extracted articles: ',
+    'bibteximport-title'                   => 'Title:',
+    'bibteximport-author'                  => 'Author:',
+    'bibteximport-year'                    => 'Year:',
 );
 
 /** French (Français)
@@ -28,4 +31,7 @@ $messages['fr'] = array(
     'bibteximport-form-message'            => 'Sélectionnez le fichier BibTex à convertir en article(s), une confirmation vous sera demandée.',
     'bibteximport-select-data'             => 'Sélectionnez les articles à importer :',
     'bibteximport-log-summary-extracter'   => 'Articles extraits : ',
+    'bibteximport-title'                   => 'Titre :',
+    'bibteximport-author'                  => 'Auteur :',
+    'bibteximport-year'                    => 'Année :',
 );

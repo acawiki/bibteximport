@@ -39,16 +39,32 @@ class SpecialBibTexImport extends SpecialPage {
     function AnalizeArticles($fileinfo) {
       global $IP, $wgOut;
       //TO CHANGE require_once "$IP/includes/User.php";
+      require_once(dirname(__FILE__) . "/phpbib/bibliography.php");
       $extracted = 0 ;
-      $filedata=explode("\n",rtrim(file_get_contents($fileinfo['tmp_name'])));
-      $output='';
 
-      foreach ($filedata as $line=>$newuserstr) {
-       // $extracted++;
+      $titleObj = Title::makeTitle( NS_SPECIAL, 'BibTexImport' );
+      $action = $titleObj->escapeLocalURL();
+
+
+      $output_select='';
+      $output_select.='<form enctype="multipart/form-data" method="post"  action="'.$action.'">';
+      $output_select.='<table border=0 width=100%>';
+
+      $myBIB=new Bibliography($fileinfo['tmp_name']);
+      foreach($myBIB->biblio["title"] as $bibkey=>$title) {
+          $output_select.='<tr> <td><input name="' . $bibkey . '" type="checkbox" /></td> <td>'.wfMsg( 'bibteximport-title' ).'</td> <td>' . $title . '</td></tr>';
+          if(isset($myBIB->biblio["author"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-author' ).'</td><td>' . $myBIB->biblio["author"][$bibkey] . '</td></tr>'; }    
+          if(isset($myBIB->biblio["author"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-year' ).'</td><td>' . $myBIB->biblio["author"][$bibkey] . '</td></tr>'; }  
+          $extracted++;
       }
+      $output_select.='</table>';
+      $output_select.='</form>';
 
-      $output.=wfMsg( 'bibteximport-log-summary-extracter' ).' : '.$extracted.'<br />';
+      $output=wfMsg( 'bibteximport-log-summary-extracter' ).$extracted.'<br />';
       $output.='<h2>'.wfMsg( 'bibteximport-select-data' ).'</h2>';
+
+      $output.=$output_select;
+
       return $output;
     }
   }

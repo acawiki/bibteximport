@@ -1,1 +1,17 @@
-This is an empty repository for Steren's BibtexImport Mediawiki extension.
+== About ==
+
+Bibtex Import is an extension to MediaWiki to provide BibTex files importation to your wiki.
+
+Notes on installing Bibtex Import can be found in the file INSTALL.
+
+== Credits ==
+
+Bibtex Import was written by Steren Giannini for CreativeCommons.
+
+== Manual ==
+
+Go to the page Special:BibTexImport
+
+== Contact ==
+
+For comments, questions, suggestions or bug reports please contact steren.giannini@gmail.com
