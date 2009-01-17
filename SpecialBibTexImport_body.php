@@ -55,7 +55,7 @@ class SpecialBibTexImport extends SpecialPage {
       foreach($myBIB->biblio["title"] as $bibkey=>$title) {
           $output_select.='<tr> <td><input name="' . $bibkey . '" type="checkbox" /></td> <td>'.wfMsg( 'bibteximport-title' ).'</td> <td><input type="text" name="'. $bibkey .'_-_title" value="' . $title . '" size="60"/></td></tr>';
           if(isset($myBIB->biblio["author"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-author' ).'</td><td><input type="text" name="'. $bibkey .'_-_author" value="' . $myBIB->biblio["author"][$bibkey] . '" size="60"/></td></tr>'; }    
-          if(isset($myBIB->biblio["year"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-year' ).'</td><td><input type="text" name="'. $bibkey .'_-_title" value="' . $myBIB->biblio["year"][$bibkey] . '" size="60"/></td></tr>'; }  
+          if(isset($myBIB->biblio["year"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-year' ).'</td><td><input type="text" name="'. $bibkey .'_-_year" value="' . $myBIB->biblio["year"][$bibkey] . '" size="60"/></td></tr>'; }  
           $extracted++;
       }
 
@@ -66,7 +66,6 @@ class SpecialBibTexImport extends SpecialPage {
 
       $output=wfMsg( 'bibteximport-log-summary-extracter' ).$extracted.'<br />';
       $output.='<h2>'.wfMsg( 'bibteximport-select-data' ).'</h2>';
-
       $output.=$output_select;
 
       return $output;
@@ -75,8 +74,12 @@ class SpecialBibTexImport extends SpecialPage {
     function ImportArticles() {
       global $IP;
       //TO CHANGE require_once "$IP/includes/User.php";
-
       $output = '';
+
+  foreach ($_POST as $key => $value) {
+    $output .= $key . addslashes(trim($value)) ."<br/>";
+  }
+
       return $output;
     }
   }
