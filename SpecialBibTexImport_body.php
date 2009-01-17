@@ -18,6 +18,8 @@ class SpecialBibTexImport extends SpecialPage {
       $wgOut->setPagetitle( wfMsg( 'bibteximport' ) );
       if (IsSet($_FILES['users_file'])) {
         $wgOut->addHTML( $this->AnalizeArticles($_FILES['users_file']) );
+      } else if ( IsSet($_POST['import_to_wiki']) ) {
+        $wgOut->addHTML( $this->ImportArticles() ); 
       } else {
         $wgOut->addHTML( $this->MakeForm() );
       }
@@ -38,7 +40,6 @@ class SpecialBibTexImport extends SpecialPage {
 
     function AnalizeArticles($fileinfo) {
       global $IP, $wgOut;
-      //TO CHANGE require_once "$IP/includes/User.php";
       require_once(dirname(__FILE__) . "/phpbib/bibliography.php");
       $extracted = 0 ;
 
@@ -48,15 +49,18 @@ class SpecialBibTexImport extends SpecialPage {
 
       $output_select='';
       $output_select.='<form enctype="multipart/form-data" method="post"  action="'.$action.'">';
-      $output_select.='<table border=0 width=100%>';
+      $output_select.='<table style="width: 100%; border :0; ">';
 
       $myBIB=new Bibliography($fileinfo['tmp_name']);
       foreach($myBIB->biblio["title"] as $bibkey=>$title) {
-          $output_select.='<tr> <td><input name="' . $bibkey . '" type="checkbox" /></td> <td>'.wfMsg( 'bibteximport-title' ).'</td> <td>' . $title . '</td></tr>';
-          if(isset($myBIB->biblio["author"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-author' ).'</td><td>' . $myBIB->biblio["author"][$bibkey] . '</td></tr>'; }    
-          if(isset($myBIB->biblio["author"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-year' ).'</td><td>' . $myBIB->biblio["author"][$bibkey] . '</td></tr>'; }  
+          $output_select.='<tr> <td><input name="' . $bibkey . '" type="checkbox" /></td> <td>'.wfMsg( 'bibteximport-title' ).'</td> <td><input type="text" name="'. $bibkey .'_-_title" value="' . $title . '" size="60"/></td></tr>';
+          if(isset($myBIB->biblio["author"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-author' ).'</td><td><input type="text" name="'. $bibkey .'_-_author" value="' . $myBIB->biblio["author"][$bibkey] . '" size="60"/></td></tr>'; }    
+          if(isset($myBIB->biblio["year"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-year' ).'</td><td><input type="text" name="'. $bibkey .'_-_title" value="' . $myBIB->biblio["year"][$bibkey] . '" size="60"/></td></tr>'; }  
           $extracted++;
       }
+
+      $output_select.='<tr><td><br/></td><td></td><td></td></tr>';
+      $output_select.='<tr><td></td><td></td><td><input type="submit" name="import_to_wiki" value="'.wfMsg( 'bibteximport-import-button' ).'" /></td></tr>';
       $output_select.='</table>';
       $output_select.='</form>';
 
@@ -65,6 +69,14 @@ class SpecialBibTexImport extends SpecialPage {
 
       $output.=$output_select;
 
+      return $output;
+    }
+
+    function ImportArticles() {
+      global $IP;
+      //TO CHANGE require_once "$IP/includes/User.php";
+
+      $output = '';
       return $output;
     }
   }
