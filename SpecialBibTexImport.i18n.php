@@ -16,9 +16,12 @@ $messages['en'] = array(
     'bibteximport-select-data'             => 'Select and correct the articles you want to import:',
     'bibteximport-log-summary-extracter'   => 'Extracted articles: ',
     'bibteximport-title'                   => 'Title:',
-    'bibteximport-author'                  => 'Author:',
+    'bibteximport-author'                  => 'Authors:',
     'bibteximport-year'                    => 'Year:',
     'bibteximport-import-button'           => 'Import to wiki',
+    'bibteximport-import-imported'         => 'Imported articles',
+    'bibteximport-import-console'          => 'Import log',
+    'bibteximport-import-newarticle'       => 'New article for bibkey',
 );
 
 /** French (Français)
@@ -33,7 +36,10 @@ $messages['fr'] = array(
     'bibteximport-select-data'             => 'Sélectionnez et corrigez les articles à importer :',
     'bibteximport-log-summary-extracter'   => 'Articles extraits : ',
     'bibteximport-title'                   => 'Titre :',
-    'bibteximport-author'                  => 'Auteur :',
+    'bibteximport-author'                  => 'Auteurs :',
     'bibteximport-year'                    => 'Année :',
     'bibteximport-import-button'           => 'Importer dans le wiki',
+    'bibteximport-import-imported'         => 'Articles importés',
+    'bibteximport-import-console'          => 'Journal de l\'importation',
+    'bibteximport-import-newarticle'       => 'Nouvel article pour la clef',
 );

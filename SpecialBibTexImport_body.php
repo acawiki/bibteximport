@@ -54,7 +54,7 @@ class SpecialBibTexImport extends SpecialPage {
       $myBIB=new Bibliography($fileinfo['tmp_name']);
       foreach($myBIB->biblio["title"] as $bibkey=>$title) {
           $output_select.='<tr> <td><input name="bibkey_-_' . $bibkey . '" type="checkbox" /></td> <td>'.wfMsg( 'bibteximport-title' ).'</td> <td><input type="text" name="title_-_'. $bibkey .'" value="' . $title . '" size="60"/></td></tr>';
-          if(isset($myBIB->biblio["author"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-author' ).'</td><td><input type="text" name="author_-_'. $bibkey .'" value="' . $myBIB->biblio["author"][$bibkey] . '" size="60"/></td></tr>'; }    
+          if(isset($myBIB->biblio["author"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-author' ).'</td><td><input type="text" name="author_-_'. $bibkey .'" value="' . preg_replace('/ and /', ', ', $myBIB->biblio["author"][$bibkey]) . '" size="60"/></td></tr>'; }    
           if(isset($myBIB->biblio["year"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-year' ).'</td><td><input type="text" name="year_-_'. $bibkey .'" value="' . $myBIB->biblio["year"][$bibkey] . '" size="60"/></td></tr>'; }  
           $extracted++;
       }
@@ -72,13 +72,12 @@ class SpecialBibTexImport extends SpecialPage {
     }
 
     function ImportArticles() {
-        global $IP;
-        //TO CHANGE require_once "$IP/includes/User.php";
-        $output = '';
+        $output = '<h2>'.wfMsg( 'bibteximport-import-imported' ).'</h2>';
+        $console = '<h3>'.wfMsg( 'bibteximport-import-console' ).'</h3>';
 
         $articles = array();
         $bibkey ='';
-        $title = ''; $summary = '';
+        $title = ''; $content = '';
 
         //We first parse the post data
         foreach ($_POST as $key => $value) {
@@ -86,35 +85,50 @@ class SpecialBibTexImport extends SpecialPage {
             if($keyword_key[0] == 'bibkey' && $value == 'on') { 
                 //if bibkey not empty create the page before doing more processing
                 if($bibkey !='') {
-                    //TOCHANGE
-                    $output .= 'TOCHANGE NEPAGE ' . $title .'<br/>' . $summary ;
+                    //create the page
+                    $output .= $this->Createpage($title,$content);
                 }                
 
                 //prepare the new temp variables
                 $bibkey = $keyword_key[1]; 
-                $output.='TOCHANGE article created for key ' . $bibkey .'<br/>';
-                $title = ''; $summary = '';
+                $console .= wfMsg( 'bibteximport-import-newarticle' ) . ' ' . $bibkey .'<br/>';
+                $title = ''; $content = '';
             }
             else if( $keyword_key[1] == $bibkey && $keyword_key[0] == 'title' ) { 
-                $output .= 'TOCHANGE Title : ' . $value .'<br/>' ;
+                $console .= wfMsg( 'bibteximport-title' ) . ' ' . $value .'<br/>' ;
                 $title = $value;
             }
             else if( $keyword_key[1] == $bibkey && $keyword_key[0] == 'author' ) {
-                $output .= 'TOCHANGE Author : ' . $value .'<br/>' ;
-                $summary.= "author=" . $value . "\n";
+                $console .= wfMsg( 'bibteximport-author' ) . ' ' . $value .'<br/>' ;
+                $content.= "|authors=" . $value . "\r\n";
             }
             else if( $keyword_key[1] == $bibkey && $keyword_key[0] == 'year' ) {
-                $output .= 'TOCHANGE Year : ' . $value .'<br/>' ;
-                $summary.= "year=" . $value . "\n";
+                $console .= wfMsg( 'bibteximport-year' ) . ' ' . $value .'<br/>' ;
+                $content.= "|date=" . $value . "\r\n";
             }
         }
-        //create the page
-        //TOCHANGE
-        $output .= 'TOCHANGE NEPAGE ' . $title .'<br/>' . $summary ;
+        if($bibkey !='') {
+            //create the page
+            $output .= $this->Createpage($title,$content);
+        }
 
-
-
+      $output.=$console;
 
       return $output;
     }
+
+
+    function Createpage($title,$content) {
+        global $IP;
+        //TO CHANGE require_once "$IP/includes/User.php";
+        $content = "{{Summary\r\n" . $content . "}}";
+
+        $articleTitle = Title::newFromText($title);
+        $article = new Article($articleTitle);
+        $article->doEdit($content, 'BibTex auto import ' . date('Y-m-d h:i:s') );
+        if($article) {
+            return '<a href="' . $articleTitle->escapeFullURL() . '">' . $articleTitle->getText() . '</a> <br/>';
+        } else return 'error importing' . $title;
+    }
+
   }
