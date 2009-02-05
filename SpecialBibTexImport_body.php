@@ -47,15 +47,23 @@ class SpecialBibTexImport extends SpecialPage {
       $action = $titleObj->escapeLocalURL();
 
       $output_select='';
-
-      $output_select.='<form enctype="multipart/form-data" method="post"  action="'.$action.'">';
+      $output_select.='<form enctype="multipart/form-data" method="post"  action="'.$action.'" name="correctarticles">';
       $output_select.='<table style="width: 100%; border :0; ">';
 
       $myBIB=new Bibliography($fileinfo['tmp_name']);
       foreach($myBIB->biblio["title"] as $bibkey=>$title) {
-          $output_select.='<tr> <td><input name="bibkey_-_' . $bibkey . '" type="checkbox" /></td> <td>'.wfMsg( 'bibteximport-title' ).'</td> <td><input type="text" name="title_-_'. $bibkey .'" value="' . $title . '" size="60"/></td></tr>';
-          if(isset($myBIB->biblio["author"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-author' ).'</td><td><input type="text" name="author_-_'. $bibkey .'" value="' . preg_replace('/ and /', ', ', $myBIB->biblio["author"][$bibkey]) . '" size="60"/></td></tr>'; }    
-          if(isset($myBIB->biblio["year"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-year' ).'</td><td><input type="text" name="year_-_'. $bibkey .'" value="' . $myBIB->biblio["year"][$bibkey] . '" size="60"/></td></tr>'; }  
+          $output_select.='<tr> <td><input name="bibkey_-_' . $bibkey . '" type="checkbox"/></td> <td>'.wfMsg( 'bibteximport-title' ).'</td> <td><input type="text" name="title_-_'. $bibkey .'" value="' . $title . '" size="60"/></td></tr>';
+
+          $output_select.= $this->AnalizeArticlesFieldLine($myBIB, "author", $bibkey);
+  
+          if(isset($myBIB->biblio["month"][$bibkey])) { $month = $myBIB->biblio["month"][$bibkey] . '/'; } else { $month = ''; }
+
+          if(isset($myBIB->biblio["year"][$bibkey])) { $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-date' ).'</td><td><input type="text" name="date_-_'. $bibkey .'" value="' . $month . $myBIB->biblio["year"][$bibkey] . '" size="60"/></td></tr>'; }
+
+          $output_select.= $this->AnalizeArticlesFieldLine($myBIB, "journal", $bibkey);
+          $output_select.= $this->AnalizeArticlesFieldLine($myBIB, "volume", $bibkey);
+
+          $output_select.='<tr><td><br/></td><td></td><td></td></tr>';
           $extracted++;
       }
 
@@ -69,6 +77,11 @@ class SpecialBibTexImport extends SpecialPage {
       $output.=$output_select;
 
       return $output;
+    }
+
+    function AnalizeArticlesFieldLine($BIB, $field, $bibkey) {
+          if(isset($BIB->biblio[$field][$bibkey])) { return '<tr><td></td><td>'.wfMsg( 'bibteximport-'. $field ).'</td><td><input type="text" name="' . $field . '_-_' . $bibkey .'" value="' . $BIB->biblio[$field][$bibkey] . '" size="60"/></td></tr>'; }
+          else { return ''; }
     }
 
     function ImportArticles() {
@@ -102,9 +115,17 @@ class SpecialBibTexImport extends SpecialPage {
                 $console .= wfMsg( 'bibteximport-author' ) . ' ' . $value .'<br/>' ;
                 $content.= "|authors=" . $value . "\r\n";
             }
-            else if( $keyword_key[1] == $bibkey && $keyword_key[0] == 'year' ) {
-                $console .= wfMsg( 'bibteximport-year' ) . ' ' . $value .'<br/>' ;
-                $content.= "|date=" . $value . "\r\n";
+            else if( $keyword_key[1] == $bibkey && $keyword_key[0] == 'date' ) {
+                $console .= wfMsg( 'bibteximport-date' ) . ' ' . $value .'<br/>' ;
+                $content.= "|pub_date=" . $value . "\r\n";
+            }
+            else if( $keyword_key[1] == $bibkey && $keyword_key[0] == 'journal' ) {
+                $console .= wfMsg( 'bibteximport-journal' ) . ' ' . $value .'<br/>' ;
+                $content.= "|journal=" . $value . "\r\n";
+            }
+            else if( $keyword_key[1] == $bibkey && $keyword_key[0] == 'volume' ) {
+                $console .= wfMsg( 'bibteximport-volume' ) . ' ' . $value .'<br/>' ;
+                $content.= "|journal_volume=" . $value . "\r\n";
             }
         }
         if($bibkey !='') {
