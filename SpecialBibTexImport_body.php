@@ -35,6 +35,7 @@ class SpecialBibTexImport extends SpecialPage {
       $output.='<tr><td align=right></td><td><input type="submit" value="'.wfMsg( 'bibteximport-form-button' ).'" /></td></tr>';
       $output.='</table>';
       $output.='</form>';
+
       return $output;
     }
 
@@ -67,7 +68,6 @@ class SpecialBibTexImport extends SpecialPage {
           $extracted++;
       }
 
-      $output_select.='<tr><td><br/></td><td></td><td></td></tr>';
       $output_select.='<tr><td></td><td></td><td><input type="submit" name="import_to_wiki" value="'.wfMsg( 'bibteximport-import-button' ).'" /></td></tr>';
       $output_select.='</table>';
       $output_select.='</form>';
@@ -141,15 +141,22 @@ class SpecialBibTexImport extends SpecialPage {
 
     function Createpage($title,$content) {
         global $IP;
-        //TO CHANGE require_once "$IP/includes/User.php";
         $content = "{{Summary\r\n" . $content . "}}";
 
         $articleTitle = Title::newFromText($title);
         $article = new Article($articleTitle);
-        $article->doEdit($content, 'BibTex auto import ' . date('Y-m-d h:i:s') );
-        if($article) {
-            return '<a href="' . $articleTitle->escapeFullURL() . '">' . $articleTitle->getText() . '</a> <br/>';
-        } else return 'error importing' . $title;
+        if( !$article->exists() )
+        {
+            $article->doEdit($content, 'BibTex auto import ' . date('Y-m-d h:i:s') );
+            if($article)
+            {
+                return '<a href="' . $articleTitle->escapeFullURL() . '">' . $articleTitle->getText() . '</a> <br/>';
+            } else return wfMsg('bibteximport-error-importing') . $title .'<br/>';
+        }
+        else
+        {
+            return wfMsg('bibteximport-error-article-exists') . $title .'<br/>';
+        }
     }
 
   }

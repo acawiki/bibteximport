@@ -25,6 +25,8 @@ $messages['en'] = array(
     'bibteximport-import-imported'         => 'Imported articles',
     'bibteximport-import-console'          => 'Import log',
     'bibteximport-import-newarticle'       => 'New article for bibkey',
+    'bibteximport-error-importing'         => 'Error importing: ', 
+    'bibteximport-error-article-exists'    => 'Error: Article already exists: ',
 );
 
 /** French (Français)
@@ -48,4 +50,6 @@ $messages['fr'] = array(
     'bibteximport-import-imported'         => 'Articles importés',
     'bibteximport-import-console'          => 'Journal de l\'importation',
     'bibteximport-import-newarticle'       => 'Nouvel article pour la clef',
+    'bibteximport-error-importing'         => 'Erreur à l\'importation : ', 
+    'bibteximport-error-article-exists'    => 'Erreur : l\'article existe déjà : ',
 );
