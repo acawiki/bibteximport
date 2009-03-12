@@ -55,7 +55,12 @@ class SpecialBibTexImport extends SpecialPage {
       foreach($myBIB->biblio["title"] as $bibkey=>$title) {
           $output_select.='<tr> <td><input name="bibkey_-_' . $bibkey . '" type="checkbox"/></td> <td>'.wfMsg( 'bibteximport-title' ).'</td> <td><input type="text" name="title_-_'. $bibkey .'" value="' . $title . '" size="60"/></td></tr>';
 
-          $output_select.= $this->AnalizeArticlesFieldLine($myBIB, "author", $bibkey);
+          //$output_select.= $this->AnalizeArticlesFieldLine($myBIB, "author", $bibkey);
+
+          if(isset($myBIB->biblio["author"][$bibkey])) {     
+             $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-author' ).'</td><td><input type="text" name="author_-_'. $bibkey .'" value="' . implode(", ",explode(" and ", $myBIB->biblio["author"][$bibkey])) . '" size="60"/></td></tr>'; 
+             }
+
   
           if(isset($myBIB->biblio["month"][$bibkey])) { $month = $myBIB->biblio["month"][$bibkey] . '/'; } else { $month = ''; }
 
@@ -63,6 +68,8 @@ class SpecialBibTexImport extends SpecialPage {
 
           $output_select.= $this->AnalizeArticlesFieldLine($myBIB, "journal", $bibkey);
           $output_select.= $this->AnalizeArticlesFieldLine($myBIB, "volume", $bibkey);
+          $output_select.= $this->AnalizeArticlesFieldLine($myBIB, "url", $bibkey);
+          $output_select.= $this->AnalizeArticlesFieldLine($myBIB, "doi", $bibkey);
 
           $output_select.='<tr><td><br/></td><td></td><td></td></tr>';
           $extracted++;
@@ -126,6 +133,14 @@ class SpecialBibTexImport extends SpecialPage {
             else if( $keyword_key[1] == $bibkey && $keyword_key[0] == 'volume' ) {
                 $console .= wfMsg( 'bibteximport-volume' ) . ' ' . $value .'<br/>' ;
                 $content.= "|journal_volume=" . $value . "\r\n";
+            }
+            else if( $keyword_key[1] == $bibkey && $keyword_key[0] == 'url' ) {
+                $console .= wfMsg( 'bibteximport-url' ) . ' ' . $value .'<br/>' ;
+                $content.= "|url=" . $value . "\r\n";
+            }
+            else if( $keyword_key[1] == $bibkey && $keyword_key[0] == 'doi' ) {
+                $console .= wfMsg( 'bibteximport-doi' ) . ' ' . $value .'<br/>' ;
+                $content.= "|doi=" . $value . "\r\n";
             }
         }
         if($bibkey !='') {
