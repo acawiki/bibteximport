@@ -71,6 +71,11 @@ class SpecialBibTexImport extends SpecialPage {
           $output_select.= $this->AnalizeArticlesFieldLine($myBIB, "url", $bibkey);
           $output_select.= $this->AnalizeArticlesFieldLine($myBIB, "doi", $bibkey);
 
+          if(isset($myBIB->biblio["note"][$bibkey])) {     
+             $output_select.='<tr><td></td><td>'.wfMsg( 'bibteximport-note' ).'</td><td><textarea name="note_-_'. $bibkey .'"  rows="4" cols="50">' . $myBIB->biblio["note"][$bibkey] . '</textarea></td></tr>'; 
+          }
+             
+
           $output_select.='<tr><td><br/></td><td></td><td></td></tr>';
           $extracted++;
       }
@@ -141,6 +146,10 @@ class SpecialBibTexImport extends SpecialPage {
             else if( $keyword_key[1] == $bibkey && $keyword_key[0] == 'doi' ) {
                 $console .= wfMsg( 'bibteximport-doi' ) . ' ' . $value .'<br/>' ;
                 $content.= "|doi=" . $value . "\r\n";
+            }
+            else if( $keyword_key[1] == $bibkey && $keyword_key[0] == 'note' ) {
+                $console .= wfMsg( 'bibteximport-note' ) . ' ' . $value .'<br/>' ;
+                $content.= "|summary=" . $value . "\r\n";
             }
         }
         if($bibkey !='') {
