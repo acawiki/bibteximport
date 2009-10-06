@@ -12,7 +12,7 @@ require_once "$IP/includes/SpecialPage.php";
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'BibTex Import',
 	'author' => array('Steren Giannini'),
-	'url' => 'http://wiki.creativecommons.org',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:BibTexImport',
 	'description' => 'Imports BibTex files to articles',
 	'descriptionmsg' => 'bibteximport-desc',
 );
