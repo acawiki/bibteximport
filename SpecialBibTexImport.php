@@ -10,17 +10,17 @@ if (!defined('MEDIAWIKI')) die();
 require_once "$IP/includes/SpecialPage.php";
 
 $wgExtensionCredits['specialpage'][] = array(
-	'name' => 'BibTex Import',
+	'name' => 'BibTeX Import',
 	'author' => array('Steren Giannini'),
 	'url' => 'http://www.mediawiki.org/wiki/Extension:BibTexImport',
-	'description' => 'Imports BibTex files to articles',
+	'description' => 'Imports BibTeX files to articles',
 	'descriptionmsg' => 'bibteximport-desc',
 );
 
 //$wgAvailableRights[] = 'import_users';
 //$wgGroupPermissions['bureaucrat']['import_users'] = true;
 $dir = dirname(__FILE__) . '/';
-$wgSpecialPages['BibTexImport'] = 'SpecialBibTexImport'; 
+$wgSpecialPages['BibTeXImport'] = 'SpecialBibTexImport'; 
 $wgAutoloadClasses['SpecialBibTexImport'] = $dir . 'SpecialBibTexImport_body.php';
 $wgExtensionMessagesFiles['BibTexImport'] = $dir . 'SpecialBibTexImport.i18n.php';
 $wgExtensionAliasesFiles['BibTexImport'] = $dir . 'SpecialBibTexImport.alias.php';
