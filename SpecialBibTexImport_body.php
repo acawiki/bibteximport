@@ -7,7 +7,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 class SpecialBibTexImport extends SpecialPage {
 
     function SpecialBibTexImport() {
-	SpecialPage::SpecialPage('BibTexImport' , 'bibteximport' );
+	SpecialPage::SpecialPage('BibTeXImport' , 'bibteximport' );
 	wfLoadExtensionMessages('BibTexImport');
     }
 
@@ -26,9 +26,11 @@ class SpecialBibTexImport extends SpecialPage {
     }
 
     function MakeForm() {
-      $titleObj = Title::makeTitle( NS_SPECIAL, 'BibTexImport' );
+      $titleObj = Title::makeTitle( NS_SPECIAL, 'BibTeXImport' );
       $action = $titleObj->escapeLocalURL();
-      $output = '<p>' . wfMsg( 'bibteximport-form-message' ) . '</p>';
+      $output = '';
+
+      $output.= '<p>' . wfMsg( 'bibteximport-form-message' ) . '</p>';
       $output.='<form enctype="multipart/form-data" method="post"  action="'.$action.'">';
       $output.='<table border=0 width=100%>';
       $output.='<tr><td align=right width=160>'.wfMsg( 'bibteximport-form-caption' ).': </td><td><input name="users_file" type="file" size=40 /></td></tr>';
@@ -44,7 +46,7 @@ class SpecialBibTexImport extends SpecialPage {
       require_once(dirname(__FILE__) . "/phpbib/bibliography.php");
       $extracted = 0 ;
 
-      $titleObj = Title::makeTitle( NS_SPECIAL, 'BibTexImport' );
+      $titleObj = Title::makeTitle( NS_SPECIAL, 'BibTeXImport' );
       $action = $titleObj->escapeLocalURL();
 
       $output_select='';
@@ -171,7 +173,7 @@ class SpecialBibTexImport extends SpecialPage {
         $article = new Article($articleTitle);
         if( !$article->exists() )
         {
-            $article->doEdit($content, 'BibTex auto import ' . date('Y-m-d h:i:s') );
+            $article->doEdit($content, 'BibTeX auto import ' . date('Y-m-d h:i:s') );
             if($article)
             {
                 return '<a href="' . $articleTitle->escapeFullURL() . '">' . $articleTitle->getText() . '</a> <br/>';
