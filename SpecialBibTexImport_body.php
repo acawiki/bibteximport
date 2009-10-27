@@ -167,7 +167,7 @@ class SpecialBibTexImport extends SpecialPage {
 
     function Createpage($title,$content) {
         global $IP;
-        $content = "{{Summary\r\n" . $content . "}}";
+        $content = "{{Summary\r\n|title=" . $title . "\r\n" . $content . "}}";
 
         $articleTitle = Title::newFromText($title);
         $article = new Article($articleTitle);
