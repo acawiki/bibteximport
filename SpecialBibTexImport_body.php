@@ -28,13 +28,27 @@ class SpecialBibTexImport extends SpecialPage {
     function MakeForm() {
       $titleObj = Title::makeTitle( NS_SPECIAL, 'BibTeXImport' );
       $action = $titleObj->escapeLocalURL();
+
       $output = '';
 
-      $output.= '<p>' . wfMsg( 'bibteximport-form-message' ) . '</p>';
       $output.='<form enctype="multipart/form-data" method="post"  action="'.$action.'">';
-      $output.='<table border=0 width=100%>';
-      $output.='<tr><td align=right width=160>'.wfMsg( 'bibteximport-form-caption' ).': </td><td><input name="users_file" type="file" size=40 /></td></tr>';
-      $output.='<tr><td align=right></td><td><input type="submit" value="'.wfMsg( 'bibteximport-form-button' ).'" /></td></tr>';
+      $output.='<p>' . wfMsg('bibteximport-form-caption') . ':';
+      $output.='<input name="users_file" type="file" size=40 /></p>';
+
+      $output.='<p><input type="submit" value="'.wfMsg( 'bibteximport-form-button' ).'" /></p>';
+
+      // XXX we should really wrap these strings for i18n
+      $output.= <<< INTRO
+      <p>Upload a BibTeX file, then select the papers to import. We'll
+      add a summary page to AcaWiki for each one. Use the links on the
+      next page to add summaries.</p>
+
+      <p>You can export BibTeX from reference management software such
+      as EndNote, RefWorks, and Zotero. BibTeX files often end with a
+      .bib (file extension). If you have any questions please feel
+      free to <a href="mailto:admin@acawiki.org">contact us</a>.</p>
+INTRO;
+
       $output.='</table>';
       $output.='</form>';
 
