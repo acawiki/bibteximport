@@ -8,7 +8,6 @@ class SpecialBibTexImport extends SpecialPage {
 
     function SpecialBibTexImport() {
 	SpecialPage::SpecialPage('BibTeXImport' , 'bibteximport' );
-	wfLoadExtensionMessages('BibTexImport');
     }
 
     function execute( $par ) {
