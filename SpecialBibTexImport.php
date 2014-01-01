@@ -7,7 +7,7 @@
  */
 
 if (!defined('MEDIAWIKI')) die();
-require_once "$IP/includes/SpecialPage.php";
+require_once "$IP/includes/specialpage/SpecialPage.php";
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'BibTeX Import',
