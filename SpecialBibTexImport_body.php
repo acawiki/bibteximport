@@ -7,7 +7,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 class SpecialBibTexImport extends SpecialPage {
 
     function SpecialBibTexImport() {
-	SpecialPage::SpecialPage('BibTeXImport' , 'bibteximport' );
+        parent::__construct( 'BibTeXImport', 'bibteximport' );
     }
 
     function execute( $par ) {
